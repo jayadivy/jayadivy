@@ -1,0 +1,161 @@
+import pandas as pd
+import numpy as np
+
+import pandas as pd
+
+import numpy as np
+
+array=np.array([3,np.nan,0.4,np.nan])
+
+print(array)
+[3.  nan 0.4 nan]
+
+import pandas as pd
+
+import numpy as np
+
+data_string='''Id,Gender,Salary,Country,Company
+
+1,male,12000,indian,google
+5
+2,female,150000,italian,alibaba
+6
+3,NaN,45000,china,NaN
+7
+4,male,NaN,indian,NaN
+8
+5,30000,australia,google'''
+9
+with open('Salary.csv','w') as out:
+10
+    out.write(data_string)
+1
+df=pd.read_csv('Salary.csv')
+2
+print('Salary Dataset:\n',df)
+3
+​
+Salary Dataset:
+    Id  Gender     Salary  Country  Company
+0   1    male      12000   indian   google
+1   2  female     150000  italian  alibaba
+2   3     NaN      45000    china      NaN
+3   4    male        NaN   indian      NaN
+4   5   30000  australia   google      NaN
+1
+print('Missing data\n',df.isnull())
+Missing data
+       Id  Gender  Salary  Country  Company
+0  False   False   False    False    False
+1  False   False   False    False    False
+2  False    True   False    False     True
+3  False   False    True    False     True
+4  False   False   False    False     True
+1
+print('Filter based on column:\n',df[df.isnull().any(axis=1)])
+Filter based on column:
+    Id Gender     Salary Country Company
+2   3    NaN      45000   china     NaN
+3   4   male        NaN  indian     NaN
+4   5  30000  australia  google     NaN
+1
+print('sum up the missing values:\n',df.isnull().sum())
+sum up the missing values:
+ Id         0
+Gender     1
+Salary     1
+Country    0
+Company    3
+dtype: int64
+df
+1
+df.dropna(inplace=True)
+2
+print(df)
+   Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+S
+1
+df["Salary"].fillna(20000,inplace=True)
+2
+print(df)
+   Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+1
+print('Non Missing Data\n',df.notnull())
+Non Missing Data
+      Id  Gender  Salary  Country  Company
+0  True    True    True     True     True
+1  True    True    True     True     True
+1
+print('Drop missing Company Data\n',df.Company.dropna())
+2
+df.dropna()
+Drop missing Company Data
+ 0     google
+1    alibaba
+Name: Company, dtype: object
+Id	Gender	Salary	Country	Company
+0	1	male	12000	indian	google
+1	2	female	150000	italian	alibaba
+1
+ df.dropna(axis=1)
+2
+print(df)
+   Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+new_df
+1
+new_df=df.dropna(axis=0,how='any')
+2
+print(new_df)
+   Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+print('Fill Missing Data\n',df.fillna(0))
+1
+print('Fill Missing Data\n',df.fillna(0))
+Fill Missing Data
+    Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+print('Fill Missing Data\n',df.fillna(method='Pad'))
+1
+print('Fill Missing Data\n',df.fillna(method='Pad'))
+Fill Missing Data
+    Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+print('Fill Missing Data\n',df.fillna(method="bfill"))
+1
+print('Fill Missing Data\n',df.fillna(method="bfill"))
+Fill Missing Data
+    Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
+1
+gender=pd.isnull(df['Gender'])
+2
+gender
+0    False
+1    False
+Name: Gender, dtype: bool
+1
+print('Fill Missing Data\n',df["Gender"].fillna("no Gender",inplace=True))
+Fill Missing Data
+ None
+g
+1
+print(df.replace(to_replace='google',value='Microsoft'))
+   Id  Gender  Salary  Country    Company
+0   1    male   12000   indian  Microsoft
+1   2  female  150000  italian    alibaba
+(
+1
+print(df.interpolate(method='linear',limit_direction='forward'))
+   Id  Gender  Salary  Country  Company
+0   1    male   12000   indian   google
+1   2  female  150000  italian  alibaba
